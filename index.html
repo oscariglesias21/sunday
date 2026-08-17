@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Sunday?</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Quicksand:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      font-family: "Quicksand", sans-serif;
+      background:
+        linear-gradient(
+          to bottom,
+          #93cdd8 0%,
+          #c6e3d6 42%,
+          #f5deb3 100%
+        );
+      color: #503c32;
+    }
+
+    /* ---------- SKY ---------- */
+
+    .sky {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .sun {
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: #ffd985;
+      top: 8%;
+      right: 10%;
+      box-shadow:
+        0 0 50px rgba(255, 219, 133, 0.7),
+        0 0 100px rgba(255, 219, 133, 0.4);
+      animation: breathe 5s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.06);
+      }
+    }
+
+    .cloud {
+      position: absolute;
+      width: 180px;
+      height: 55px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.68);
+      filter: blur(1px);
+      animation: cloudMove linear infinite;
+    }
+
+    .cloud::before,
+    .cloud::after {
+      content: "";
+      position: absolute;
+      background: inherit;
+      border-radius: 50%;
+    }
+
+    .cloud::before {
+      width: 80px;
+      height: 80px;
+      left: 30px;
+      top: -35px;
+    }
+
+    .cloud::after {
+      width: 100px;
+      height: 100px;
+      right: 20px;
+      top: -50px;
+    }
+
+    .cloud.one {
+      top: 16%;
+      left: -220px;
+      animation-duration: 34s;
+    }
+
+    .cloud.two {
+      top: 32%;
+      left: -320px;
+      transform: scale(0.7);
+      animation-duration: 45s;
+      animation-delay: -20s;
+    }
+
+    @keyframes cloudMove {
+      from {
+        left: -320px;
+      }
+
+      to {
+        left: 110%;
+      }
+    }
+
+    /* ---------- GRASS ---------- */
+
+    .hill {
+      position: absolute;
+      bottom: -140px;
+      width: 120%;
+      height: 330px;
+      border-radius: 50% 50% 0 0;
+      background: #74a873;
+      pointer-events: none;
+    }
+
+    .hill.left {
+      left: -30%;
+      transform: rotate(4deg);
+    }
+
+    .hill.right {
+      right: -35%;
+      bottom: -175px;
+      background: #5d9366;
+      transform: rotate(-4deg);
+    }
+
+    /* ---------- FLOWERS ---------- */
+
+    .flower {
+      position: fixed;
+      bottom: 7%;
+      font-size: 25px;
+      animation: sway 3s ease-in-out infinite;
+      transform-origin: bottom;
+      pointer-events: none;
+    }
+
+    .f1 { left: 8%; animation-delay: 0.2s; }
+    .f2 { left: 15%; animation-delay: 1s; }
+    .f3 { right: 12%; animation-delay: 0.5s; }
+    .f4 { right: 21%; animation-delay: 1.4s; }
+
+    @keyframes sway {
+      0%, 100% {
+        transform: rotate(-7deg);
+      }
+
+      50% {
+        transform: rotate(7deg);
+      }
+    }
+
+    /* ---------- MAIN CARD ---------- */
+
+    main {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .card {
+      width: min(92vw, 560px);
+      padding: 52px 35px 42px;
+      text-align: center;
+
+      background: rgba(255, 248, 225, 0.88);
+      backdrop-filter: blur(12px);
+
+      border: 2px solid rgba(104, 78, 55, 0.16);
+      border-radius: 28px;
+
+      box-shadow:
+        0 25px 60px rgba(71, 74, 52, 0.20),
+        inset 0 0 30px rgba(255, 255, 255, 0.5);
+
+      animation: cardEnter 1.2s cubic-bezier(.22,1,.36,1);
+    }
+
+    @keyframes cardEnter {
+      from {
+        opacity: 0;
+        transform: translateY(35px) scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .tiny-text {
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #ad7a63;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-family: "DM Serif Display", serif;
+      font-size: clamp(42px, 8vw, 68px);
+      font-weight: 400;
+      line-height: 0.98;
+      color: #574034;
+      margin-bottom: 19px;
+    }
+
+    .subtitle {
+      font-size: 17px;
+      line-height: 1.7;
+      color: #786054;
+      max-width: 390px;
+      margin: 0 auto;
+    }
+
+    .heart {
+      display: inline-block;
+      margin: 25px 0 18px;
+      font-size: 30px;
+      animation: heartBeat 1.4s infinite;
+    }
+
+    @keyframes heartBeat {
+      0%, 100% {
+        transform: scale(1);
+      }
+
+      15% {
+        transform: scale(1.25);
+      }
+
+      30% {
+        transform: scale(1);
+      }
+    }
+
+    /* ---------- BUTTONS ---------- */
+
+    .button-area {
+      position: relative;
+      height: 105px;
+      margin-top: 12px;
+    }
+
+    button {
+      border: none;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 17px;
+      padding: 14px 31px;
+      border-radius: 999px;
+      cursor: pointer;
+
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+    }
+
+    #yesBtn {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-115%);
+      background: #648c65;
+      color: #fffef5;
+      box-shadow: 0 8px 20px rgba(75, 111, 75, 0.28);
+    }
+
+    #yesBtn:hover {
+      transform: translateX(-115%) scale(1.08);
+      box-shadow: 0 12px 28px rgba(75, 111, 75, 0.38);
+    }
+
+    #noBtn {
+      position: absolute;
+      left: 50%;
+      transform: translateX(15%);
+      background: #ead6bc;
+      color: #6e5547;
+    }
+
+    /* ---------- SUCCESS ---------- */
+
+    #success {
+      display: none;
+    }
+
+    #success.show {
+      display: block;
+      animation: successEnter 0.8s cubic-bezier(.22,1,.36,1);
+    }
+
+    @keyframes successEnter {
+      from {
+        opacity: 0;
+        transform: scale(0.85);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    #success h2 {
+      font-family: "DM Serif Display", serif;
+      font-weight: 400;
+      font-size: clamp(40px, 8vw, 60px);
+      color: #574034;
+      margin-bottom: 8px;
+    }
+
+    .date-details {
+      margin: 22px auto;
+      padding: 17px 20px;
+      max-width: 330px;
+      border-radius: 18px;
+      background: rgba(117, 156, 111, 0.13);
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .gif {
+      display: block;
+      width: min(100%, 320px);
+      max-height: 250px;
+      object-fit: contain;
+      margin: 24px auto 5px;
+      border-radius: 20px;
+    }
+
+    .final-text {
+      margin-top: 19px;
+      font-size: 14px;
+      color: #9b7868;
+    }
+
+    /* ---------- CONFETTI ---------- */
+
+    .petal {
+      position: fixed;
+      top: -30px;
+      z-index: 50;
+      font-size: 22px;
+      pointer-events: none;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform:
+          translateY(110vh)
+          translateX(var(--drift))
+          rotate(720deg);
+
+        opacity: 0;
+      }
+    }
+
+    /* ---------- MOBILE ---------- */
+
+    @media (max-width: 500px) {
+      .card {
+        padding: 43px 22px 32px;
+      }
+
+      .button-area {
+        height: 130px;
+      }
+
+      #yesBtn {
+        transform: translateX(-110%);
+      }
+
+      #yesBtn:hover {
+        transform: translateX(-110%) scale(1.05);
+      }
+
+      .sun {
+        width: 90px;
+        height: 90px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="sky">
+    <div class="sun"></div>
+    <div class="cloud one"></div>
+    <div class="cloud two"></div>
+
+    <div class="hill left"></div>
+    <div class="hill right"></div>
+
+    <div class="flower f1">🌼</div>
+    <div class="flower f2">🌷</div>
+    <div class="flower f3">🌼</div>
+    <div class="flower f4">🌷</div>
+  </div>
+
+  <main>
+
+    <!-- QUESTION -->
+    <section class="card" id="questionCard">
+
+      <p class="tiny-text">
+        quick question
+      </p>
+
+      <h1>
+        Wanna go<br>
+        on a date?
+      </h1>
+
+      <div class="heart">♡</div>
+
+      <div class="button-area" id="buttonArea">
+
+        <button id="yesBtn">
+          Yes
+        </button>
+
+        <button id="noBtn">
+          No
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- YES SCREEN -->
+    <section class="card" id="success">
+
+      <p class="tiny-text">
+        nice
+      </p>
+
+      <h2>Perfect.</h2>
+
+      <p class="subtitle">
+        Here's the plan:
+      </p>
+
+      <div class="date-details">
+        🎱 <strong>Pool date</strong><br>
+        Sunday afternoon<br>
+        🎱 Pool
+      </div>
+
+      <img
+        src="nick-wilde-zootopia.gif"
+        alt="Celebration gif"
+        class="gif"
+      />
+
+      <p class="final-text">
+        See you Sunday :)
+      </p>
+
+    </section>
+
+  </main>
+
+
+  <script>
+
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+
+    const questionCard = document.getElementById("questionCard");
+    const success = document.getElementById("success");
+
+    let escapeCount = 0;
+
+
+    /* --------------------------------
+       EVIL NO BUTTON 😭
+    -------------------------------- */
+
+    function escapeNoButton() {
+
+      escapeCount++;
+
+      const buttonWidth = noBtn.offsetWidth;
+      const buttonHeight = noBtn.offsetHeight;
+
+      const padding = 20;
+
+      const maxX =
+        window.innerWidth - buttonWidth - padding;
+
+      const maxY =
+        window.innerHeight - buttonHeight - padding;
+
+      const randomX =
+        Math.max(
+          padding,
+          Math.random() * maxX
+        );
+
+      const randomY =
+        Math.max(
+          padding,
+          Math.random() * maxY
+        );
+
+
+      noBtn.style.position = "fixed";
+      noBtn.style.left = randomX + "px";
+      noBtn.style.top = randomY + "px";
+      noBtn.style.transform = "none";
+      noBtn.style.zIndex = "100";
+
+
+      /* progressively bully her */
+
+      if (escapeCount === 1) {
+        noBtn.textContent = "Nope";
+      }
+
+      if (escapeCount === 2) {
+        noBtn.textContent = "Nice try";
+      }
+
+      if (escapeCount === 3) {
+        noBtn.textContent = "Still no";
+      }
+
+      if (escapeCount === 4) {
+        noBtn.textContent = "Okay lol";
+      }
+
+      if (escapeCount >= 5) {
+
+        noBtn.textContent = "Yes";
+
+        noBtn.style.background = "#648c65";
+        noBtn.style.color = "white";
+
+        noBtn.removeEventListener(
+          "mouseenter",
+          escapeNoButton
+        );
+
+        noBtn.onclick = sayYes;
+      }
+    }
+
+
+    noBtn.addEventListener(
+      "mouseenter",
+      escapeNoButton
+    );
+
+
+    /* Makes it work on phones too */
+
+    noBtn.addEventListener(
+      "touchstart",
+      (event) => {
+
+        event.preventDefault();
+
+        escapeNoButton();
+
+      },
+      { passive: false }
+    );
+
+
+    /* --------------------------------
+       YES
+    -------------------------------- */
+
+    yesBtn.addEventListener(
+      "click",
+      sayYes
+    );
+
+
+    function sayYes() {
+
+      questionCard.style.display = "none";
+
+      noBtn.style.display = "none";
+
+      success.classList.add("show");
+
+      createPetals();
+
+    }
+
+
+    /* --------------------------------
+       LITTLE FLOWER CONFETTI
+    -------------------------------- */
+
+    function createPetals() {
+
+      const petals = [
+        "🌸",
+        "🌷",
+        "✨",
+        "♡",
+        "🌼"
+      ];
+
+      for (let i = 0; i < 40; i++) {
+
+        const petal =
+          document.createElement("div");
+
+        petal.className = "petal";
+
+        petal.textContent =
+          petals[
+            Math.floor(
+              Math.random() * petals.length
+            )
+          ];
+
+        petal.style.left =
+          Math.random() * 100 + "vw";
+
+        petal.style.animationDuration =
+          3 + Math.random() * 4 + "s";
+
+        petal.style.animationDelay =
+          Math.random() * 1.5 + "s";
+
+        petal.style.setProperty(
+          "--drift",
+          (Math.random() * 180 - 90) + "px"
+        );
+
+        document.body.appendChild(petal);
+
+
+        setTimeout(() => {
+          petal.remove();
+        }, 8000);
+
+      }
+
+    }
+
+  </script>
+
+</body>
+</html>
